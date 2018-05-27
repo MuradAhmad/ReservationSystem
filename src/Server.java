@@ -108,33 +108,121 @@ public class Server {
 	public void run() {
 		// TODO Auto-generated method stub
 		
-		int i =1;
+		
+		getMachine();
+	
 		try {
 			while(true)
 			{
 				message = input.readLine();
-				System.out.println("Client ("+ id +" ):" + message);
-				System.out.println("Server :");
 				
-/*		
+				System.out.println("Client ("+ id +" ):" + message);
+				
+/*				
+				if(message.equalsIgnoreCase("R") ) {
+				
+				System.out.println("Client ("+ id +" ):" + message);
+				//System.out.println("Server :");
+				System.out.println("Available Machines \n ");
+				System.out.println("1) Printer" +" "+ "2) 3D Printer" +" "+ "3) Scanner" +" "+ "4) Cutter \n ");
+				
+				}*/
 								// Print Machines
 				 String filterrequest = "show";
 					if (filterrequest.equalsIgnoreCase(message)) {
-						getMachine();
-						break;						
+						//getMachine();
+						String machines = "1) Printer" +" "+ "2) 3D Printer" +" "+ "3) Scanner" +" "+ "4) Cutter" ;
+						 System.out.println("1) Printer" +" "+ "2) 3D Printer" +" "+ "3) Scanner" +" "+ "4) Cutter");
+						 output.println(machines);
+						
+						
+												
 					}
-					*/
-					message = scanner.nextLine();
-					output.println(message);
+					
+				
+				
+				if(message.equalsIgnoreCase("1")) {
+					System.out.println("You Reserved Machine: Printer "  );
+					output.println("You Reserved Machine: Printer ");
+					
+				}else
+				if(message.equalsIgnoreCase("2")) {
+					System.out.println("You Reserved Machine: 3D Printer "  );
+					output.println("You Reserved Machine: 3D Printer ");
+					
+				}else
+				if(message.equalsIgnoreCase("3")) {
+					System.out.println("You Reserved Machine: Scanner "  );
+					output.println("You Reserved Machine: Scanner ");
+					
+				}else
+				if(message.equalsIgnoreCase("4")) {
+					System.out.println("You Reserved Machine: Cutter "  );
+					output.println("You Reserved Machine: Cutter ");
+					
+				}else {
+					//System.out.println("Select machine "  );
+					getMachine();
+				}
+				
+				
+				
+				// Client Message Decription 
+				/*
+				
+					
+					System.out.println("Client ("+ id +" ):" + message);
+					System.out.println("Decrypted Message \n");
+					
+					Scanner in = new Scanner(System.in);
+					
+					  String encypText =  message;
+					  System.out.println("Enter Key (0 - 25):");
+					  int decypkey = in.nextInt();
+					  
+					  String decrypMsg = "";
+					  
+					  for(int i =0; i< encypText.length(); i++) {
+						  if((int)encypText.charAt(i) == 32) {
+							  decrypMsg += (char)32;
+							  
+						  }else if(((int)encypText.charAt(i) - decypkey) < 97 && ((int)encypText.charAt(i) - decypkey) > 90){
+							  int temp = (encypText.charAt(i) - decypkey) + 26;
+							  decrypMsg += (char)temp;	  
+							  
+						  }
+						  else if(((int)encypText.charAt(i) - decypkey) < 65){
+							  int temp = ((int)encypText.charAt(i) - decypkey) + 26;
+							  decrypMsg += (char)temp;
+							  
+						  }else {
+							  
+							  decrypMsg +=  (char)((int)encypText.charAt(i) - decypkey) ;
+						  }
+						  
+						  System.out.println(decrypMsg); 
+					
+					
+					
+				}*/
+				
+				
+						  
+					// Send Message to Client 	 
 				
 				
 				
 				
+				
+				message = scanner.nextLine();
+				output.println(message);
+			
 			}
 			
 			
 		}catch(IOException e) {
 			System.out.println("Error:" + e );
+			
 		
 	}
 	
@@ -146,15 +234,99 @@ public class Server {
   
   
   public static void getMachine() {
-	  System.out.println("Please select Machine");
-	  for(int i = 0; machinelist.length < i; i++) {
+	  System.out.println("Please select: \n 1. Encryption \n 2. Decryption");
+	  Scanner in = new Scanner(System.in);
+	  int choice = in.nextInt();
+	  
+	  if(choice ==1) {
+		  System.out.println("Encryption:");
+		  in.nextLine();
+		  System.out.println("Enter Message:");
+		  String message =  in.nextLine();
+		  System.out.println("Enter Key (0 - 25):");
+		  int key = in.nextInt();
+		  
+		  String encrypMsg = "";
+		  
+		  for (int i = 0; i < message.length(); i++ ) {
+			  if((int)message.charAt(i) == 32) {
+				  encrypMsg += (char)32;
+				  
+				  
+			  }else if((int)message.charAt(i)+ key > 122) {
+				  int temp = (int)(message.charAt(i) + key) - 122;
+				  encrypMsg += (char) (96 + temp);
+				  
+				  
+				  
+			  }else if((int)message.charAt(i)+ key > 90 && (int)message.charAt(i) < 96) {
+				  int temp = (int)(message.charAt(i) + key) - 90;
+				  encrypMsg += (char) (64 + temp);
+				  
+				  
+			  }else {
+				  encrypMsg +=(char) ((int) message.charAt(i) + key);
+				  
+			  }
+			  
+			  System.out.println(encrypMsg);
+			  
+			  
+		  }
+		  
+		  
+		  
+	  }else if (choice ==2) {
+		  
+		  System.out.println("Decryption:");
+		  in.nextLine();
+		  System.out.println("Enter Message:");
+		  String encypText =  in.nextLine();
+		  System.out.println("Enter Key (0 - 25):");
+		  int decypkey = in.nextInt();
+		  
+		  String decrypMsg = "";
+		  
+		  for(int i =0; i< encypText.length(); i++) {
+			  if((int)encypText.charAt(i) == 32) {
+				  decrypMsg += (char)32;
+				  
+			  }else if(((int)encypText.charAt(i) - decypkey) < 97 && ((int)encypText.charAt(i) - decypkey) > 90){
+				  int temp = (encypText.charAt(i) - decypkey) + 26;
+				  decrypMsg += (char)temp;	  
+				  
+			  }
+			  else if(((int)encypText.charAt(i) - decypkey) < 65){
+				  int temp = ((int)encypText.charAt(i) - decypkey) + 26;
+				  decrypMsg += (char)temp;
+				  
+			  }else {
+				  
+				  decrypMsg +=  (char)((int)encypText.charAt(i) - decypkey) ;
+			  }
+			  
+			  System.out.println(decrypMsg); 
+			  
+			  
+		  }
+		  
+		  
+		  
+		  
+	  }else {
+		  System.out.println("Choose  1 or 2 ");
+		  
+	  }
+	  
+	 /* for(int i = 0; machinelist.length < i; i++) {
 		  
 		  System.out.println(machinelist[i]);
 		  
 	  }
 	  int number = machineScan.nextInt();
 	  System.out.println("You Selected Machine:" + machinelist[number-1].substring(3, machinelist[number-1].length()));
-	  
+	  */
+	  System.out.println("1) Printer" +" "+ "2) 3D Printer" +" "+ "3) Scanner" +" "+ "4) Cutter");
 	  
   }
   
