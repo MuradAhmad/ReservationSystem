@@ -1,5 +1,1 @@
-# ReservationSystem
-Client Server connection in Java
-TCP/IP connection using sockets
-upto 5 Clients can added
-Communication between Clients and Server 
+This is clients-server java application. It consists of five clients, resources (printing machine, scanner, 3D printer) backup server and main server. When a client connects to server it displays client name and a port number. The client sends a request to server for available resources and can reserve a particular resource. The communication between clients and server is asynchronous. The encryption and decryption (Caesar cipher) mechanism is used to share the secret information between clients and server.
